@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
+//AI script that moves towards a transform specified by path gameobject(which is an array) and then 
+//updates the transform it will travel towards when it reaches its destination.
 public class Node_Follower_AI : MonoBehaviour
 {
     [Tooltip("integer representing the Node in the path that the ai is travelling towards.")]
