@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+//This holds an array of transforms and draws a line between each one.
 public class AI_Path : MonoBehaviour {
 
     public Color line_color;
