@@ -6,26 +6,35 @@ public class ui_controller : MonoBehaviour
 {
     GameObject[] ui_item;
     int item_selected;
-    int player_tires = 4;
-    int player_doors = 2;
-    bool has_door = true;
+   
+    bool has_door_1 = true;
+    bool has_door_2 = true;
+    bool has_tire_1 = true;
+    bool has_tire_2 = true;
+    bool has_tire_3 = true;
+    bool has_tire_4 = true;
+    bool has_hood = true;
+
 
     // Start is called before the first frame update
     void Start()
     {
         item_selected = 0;
-        ui_item = new GameObject[3];
+        ui_item = new GameObject[7];
+        int i = 0;
+
+        while (i < 7)
+        {
+            ui_item[i] = gameObject.transform.GetChild(i).gameObject;
+            if (ui_item[i] == null)
+                throw new System.Exception("ui_item " + i + " not set");
+            i++;
+        }
+
+       
 
 
-
-        ui_item[0] = gameObject.transform.GetChild(0).gameObject;
-        ui_item[1] = gameObject.transform.GetChild(1).gameObject;
-        ui_item[2] = gameObject.transform.GetChild(2).gameObject;
-
-
-        if (ui_item[1] == null)
-            throw new System.Exception();
-
+        
 
 
     }
@@ -40,7 +49,7 @@ public class ui_controller : MonoBehaviour
             
 
             item_selected += 1;
-            if (item_selected >= 3)
+            if (item_selected >= 7)
                 item_selected = 0;
 
             ui_item[item_selected].transform.localScale += new Vector3(0.2f, 0.2f);
@@ -54,42 +63,86 @@ public class ui_controller : MonoBehaviour
         {
             if (ui_item[item_selected].gameObject.tag == "tire")
             {
-                if (player_tires > 0)
+                if (item_selected == 0)
                 {
-                    Debug.Log("used tire");
-                    player_tires -= 1;
-                    //call tire item function use here
+                    if (has_tire_1)
+                    {
+                        Debug.Log("used front left tire");
+                        has_tire_1 = false;
+                    }
+                    else
+                        Debug.Log("tire already used");
                 }
-                else if(player_tires == 0)
+
+                if (item_selected == 2)
                 {
-                    Debug.Log("No Tires left Fool");
-                    //play sound? or other notification
+                    if (has_tire_2)
+                    {
+                        Debug.Log("used front right tire");
+                        has_tire_2 = false;
+                    }
+                    else
+                        Debug.Log("tire already used");
                 }
-                
+
+                if (item_selected == 5)
+                {
+                    if (has_tire_3)
+                    {
+                        Debug.Log("used back left tire");
+                        has_tire_3 = false;
+                    }
+                    else
+                        Debug.Log("tire already used");
+                }
+
+                if (item_selected == 6)
+                {
+                    if (has_tire_4)
+                    {
+                        Debug.Log("used back right tire");
+                        has_tire_4 = false;
+                    }
+                    else
+                        Debug.Log("tire already used");
+                }
+
+
             }
             else if (ui_item[item_selected].gameObject.tag == "door")
             {
-                if (player_doors > 0) { 
-                Debug.Log("used door");
-                    player_doors -= 1;
-                //call door item function use here
-            }
-                else if(player_doors == 0)
+
+                if (item_selected == 3)
                 {
-                    Debug.Log("No Doors left fool");
-                    //play sound? or other notification
+                    if (has_door_1)
+                    {
+                        Debug.Log("used left door");
+                        has_door_1 = false;
+                    }
+                    else
+                        Debug.Log("door already used");
                 }
 
+                if (item_selected == 4)
+                {
+                    if (has_door_2)
+                    {
+                        Debug.Log("used right door");
+                        has_door_2 = false;
+                    }
+                    else
+                        Debug.Log("door already used");
+                }
             }
             else if(ui_item[item_selected].gameObject.tag == "hood")
             {
-                if (has_door)
+                if (has_hood)
                 {
                     Debug.Log("used hood");
-                    has_door = false;
+                    has_hood = false;
                     //call hood item function use here
                 }
-                else if (!has_door)
+                else if (!has_hood)
                 {
                     Debug.Log("No hood left fool");
                     //play sound? or other notification
