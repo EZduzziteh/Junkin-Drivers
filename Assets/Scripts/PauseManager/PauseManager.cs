@@ -6,12 +6,14 @@ using ModuloKart.Controls;
 public class PauseManager : MonoBehaviour
 {
     GameObject[] pauseObjects;
+    GameObject[] unPauseObjects;
 
     // Use this for initialization
     void Start()
     {
         Time.timeScale = 1;
         pauseObjects = GameObject.FindGameObjectsWithTag("ShowOnPause");
+        unPauseObjects = GameObject.FindGameObjectsWithTag("HideOnPause");
         HidePaused();
     }
 
@@ -61,6 +63,10 @@ public class PauseManager : MonoBehaviour
         {
             g.SetActive(true);
         }
+        foreach (GameObject h in unPauseObjects)
+        {
+            h.SetActive(false);
+        }
     }
 
     //hides objects with ShowOnPause tag
@@ -69,6 +75,10 @@ public class PauseManager : MonoBehaviour
         foreach (GameObject g in pauseObjects)
         {
             g.SetActive(false);
+        }
+        foreach (GameObject h in unPauseObjects)
+        {
+            h.SetActive(true);
         }
     }
 }

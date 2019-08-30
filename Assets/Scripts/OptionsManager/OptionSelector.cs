@@ -1,8 +1,8 @@
 ﻿
 using UnityEngine;
-using ModuloKart.OptionMenu;
+using ModuloKart.MainMenu;
 public class OptionSelector : MonoBehaviour
 {
-    public NumOptions numoptions;
+    public MainMenuOption numoptions;
     public GameObject bg;
 }

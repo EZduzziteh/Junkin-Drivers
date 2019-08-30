@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 using UnityEngine;
+using UnityEngine.UI;
 using ModuloKart.Controls;
 
 namespace ModuloKart.OptionMenu {
@@ -24,7 +25,7 @@ public class OptionManager : MonoBehaviour
 {
 
         OptionManager Instance;
-        private GameObject bg_volume;
+        private gameObject bg_volume;
         private GameObject bg_p1Pref;
         private GameObject bg_p2Pref;
         private GameObject bg_p3Pref;
@@ -33,9 +34,16 @@ public class OptionManager : MonoBehaviour
 
         public numOptions numOptions;
         public bool inGameScene;
-
-
-
+        public int p1Preset = 1;
+        public int p2Preset = 1;
+        public int p3Preset = 1;
+        public int p4Preset = 1;
+        public int masterVolume = 7;
+        public Text mV;
+        public Text p1P;
+        public Text p2P;
+        public Text p3P;
+        public Text p4P;
         private void Awake()
         {
             if (Instance != null && Instance != this)
@@ -223,8 +231,138 @@ public class OptionManager : MonoBehaviour
             }
         }
 
+        bool isPressLeft;
+        bool isPressLeftRelease;
+        private void OptionChangeLeft()
+        { 
+        if (Input.GetAxis("LeftJoyStickX_ANYPLAYER") < 0)
+            {
+                isPressLeft = true;
+            }
+            if (isPressRight)
+            {
+                if (Input.GetAxis("LeftJoyStickX_ANYPLAYER") == 0)
+                {
+                    isPressLeft = false;
+                    isPressLeftRelease = true;
+                }
+            }
+            if (isPressLeftRelease)
+            {
+                isPressLeftRelease = false;
 
+               switch (numOptions)
+                {
+                    case numOptions.volume:
+                        if (masterVolume <= 0)
+                            masterVolume = 10;
+                        else
+                            masterVolume = masterVolume - 1;
+                       mV.text = masterVolume.ToString();
+                        break;
+                    case numOptions.p1Pref:
+                        if (p1Preset == 1)
+                            p1Preset = 3;
+                        
+                        else
+                            p1Preset = p1Preset - 1;
+                        p1P.text = p1Preset.ToString();
+                        break;
+                    case numOptions.p2Pref:
+                        if (p2Preset == 1)
+                            p2Preset = 3;
+                        else
+                            p2Preset = p2Preset - 1;
+                        p2P.text = p2Preset.ToString();
+                        break;
+                    case numOptions.p3Pref:
+                        if (p3Preset == 1)
+                            p3Preset = 3;
+                        else
+                            p3Preset = p3Preset - 1;
+                        p3P.text = p3Preset.ToString();
+                        break;
+                    case numOptions.p4Pref:
+                        if (p4Preset == 1)
+                            p4Preset = 3;
+                        else
+                            p4Preset = p4Preset - 1;
+                        p4P.text = p4Preset.ToString();
+                        break;
+                    case numOptions.mainMenu:
+                        break;
+                    default:
+                        Debug.Log("Unexpected Player Number Selection Option");
+                        break;
+                }
+            }
+        }
 
+        bool isPressRight;
+        bool isPressRightRelease;
+        private void OptionChangeRight()
+        {
+            if (Input.GetAxis("LeftJoyStickX_ANYPLAYER") > 0)
+            {
+                isPressRight = true;
+            }
+            if (isPressRight)
+            {
+                if (Input.GetAxis("LeftJoyStickX_ANYPLAYER") == 0)
+                {
+                    isPressRight = false;
+                    isPressRightRelease = true;
+                }
+            }
+            if (isPressRightRelease)
+            {
+                isPressRightRelease = false;
+
+                switch (numOptions)
+                {
+                    case numOptions.volume:
+                        if (masterVolume <= 10)
+                            masterVolume = 0;
+                        else
+                            masterVolume = masterVolume + 1;
+                        mV.text = masterVolume.ToString();
+                        break;
+                    case numOptions.p1Pref:
+                        if (p1Preset == 3)
+                            p1Preset = 1;
+                        else
+                            p1Preset = p1Preset + 1;
+                        p1P.text = p1Preset.ToString();
+                        break;
+                    case numOptions.p2Pref:
+                        if (p2Preset == 3)
+                            p2Preset = 1;
+                        else
+                            p2Preset = p2Preset + 1;
+                        p2P.text = p2Preset.ToString();
+                        break;
+                    case numOptions.p3Pref:
+                        if (p3Preset == 3)
+                            p3Preset = 1;
+                        else
+                            p3Preset = p3Preset + 1;
+                        p3P.text = p3Preset.ToString();
+                        break;
+                    case numOptions.p4Pref:
+                        if (p4Preset == 3)
+                            p4Preset = 1;
+                        else
+                            p4Preset = p4Preset + 1;
+                        p4P.text = p4Preset.ToString();
+                        break;
+                    case numOptions.mainMenu:
+                        break;
+                    default:
+                        Debug.Log("Unexpected Player Number Selection Option");
+                        break;
+                }
+            }
+        }
 
 
         private void InitPlayerOptions()
