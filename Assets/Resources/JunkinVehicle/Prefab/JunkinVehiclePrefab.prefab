@@ -128,7 +128,7 @@ MonoBehaviour:
   steer_magnitude_float: 0
   brake_magnitude_float: 0
   drift_correction_float: 0
-  nitros_meter_float: 99999
+  nitros_meter_float: 100
   nitros_speed_float: 0
   tiltLerp_float: 0
   vehicle_air_height: 0
@@ -147,11 +147,11 @@ MonoBehaviour:
   drift_turn_ratio_float: 0.25
   max_nitros_meter_float: 100
   max_nitros_speed_float: 100
-  nitros_depletion_rate: 2.5
+  nitros_depletion_rate: 10
   min_air_control: 0.1
   rayCast_layerMask:
     serializedVersion: 2
-    m_Bits: 21
+    m_Bits: 4294967033
   slope_ray_dist_float: 1000
   ACCEL: 50
   DRAG: 25
@@ -165,10 +165,10 @@ MonoBehaviour:
   PlayerID: 1
   JoyStick: -1
   isControllerInitialized: 0
-  input_steering: LeftJoyStickX_P
-  input_accelerate: RightTrigger_P
-  input_drift: B_P
-  input_nitros: A_P
+  input_steering: Horizontal
+  input_accelerate: Vertical
+  input_drift: Jump
+  input_nitros: NitroKey
 --- !u!54 &443800255
 Rigidbody:
   m_ObjectHideFlags: 0

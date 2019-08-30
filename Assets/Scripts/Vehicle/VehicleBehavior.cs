@@ -690,7 +690,7 @@ namespace ModuloKart.CustomVehiclePhysics
             steer_magnitude_float = 0;
             brake_magnitude_float = 0;
             drift_correction_float = 0;
-            nitros_meter_float = 99999;
+            nitros_meter_float = 100;
             nitros_speed_float = 0;
 
 
@@ -701,7 +701,7 @@ namespace ModuloKart.CustomVehiclePhysics
             pan_toward_float = 30;
             is_MotionBlur = true;
 
-            nitros_meter_float = 99999;
+            //nitros_meter_float = 99999;
 
             max_gravity_float = 250f;
             max_steer_float = 15f;
@@ -714,7 +714,7 @@ namespace ModuloKart.CustomVehiclePhysics
             drift_turn_ratio_float = 0.25f;
             max_nitros_meter_float = 100f;
             max_nitros_speed_float = 100f;
-            nitros_depletion_rate = 2.5f;
+            nitros_depletion_rate = 10f;
 
             rayCast_layerMask = ~(1 << 1 | 1 << 2 | 1 << 8);
             slope_ray_dist_float = 1000;
