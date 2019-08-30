@@ -4,10 +4,18 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - MiniMapImage
   - CarHeading
-  - DeathCamera
-  - MiniMapCamera
+  - CarMain
+  - Fire
+  - Obstacle
+  - Waypoint
+  - Tire
+  - Hood
+  - Door
+  - Player1
+  - Player2
+  - Player3
+  - Player4
   layers:
   - Default
   - TransparentFX
