@@ -6,6 +6,9 @@ TagManager:
   tags:
   - CarHeading
   - CarMain
+  - Track
+  - Hood_projectile
+  - Ramp
   layers:
   - Default
   - TransparentFX
