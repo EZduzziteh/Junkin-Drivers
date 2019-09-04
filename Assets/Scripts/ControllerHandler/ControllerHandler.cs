@@ -133,6 +133,7 @@ namespace ModuloKart.Controls
                 vehicle3.JoyStick = GetJoyStickNumber();
                 if ((vehicle3.JoyStick == vehicle1.JoyStick) || (vehicle3.JoyStick == vehicle2.JoyStick) || (vehicle3.JoyStick == vehicle4.JoyStick))
                 {
+                    vehicle3.JoyStick = -1;
                     return;
                 }
                 if (vehicle3.JoyStick > 0)
@@ -152,6 +153,8 @@ namespace ModuloKart.Controls
                 vehicle4.JoyStick = GetJoyStickNumber();
                 if ((vehicle4.JoyStick == vehicle1.JoyStick) || (vehicle4.JoyStick == vehicle2.JoyStick) || (vehicle4.JoyStick == vehicle3.JoyStick))
                 {
+                    vehicle4.JoyStick = -1;
+                    Debug.Log("Vehicle 4 should return. andjystick should = -1: " + vehicle4.JoyStick);
                     return;
                 }
                 if (vehicle4.JoyStick > 0)
