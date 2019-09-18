@@ -60,11 +60,15 @@ namespace ModuloKart.CustomVehiclePhysics
         [SerializeField] public RaycastHit[] groundCheck_hits = new RaycastHit[255];
         public float gravity_float = 0;
         [SerializeField] public float max_accel_modified;
+        [SerializeField] public float max_trueBrake_modified;
+        [SerializeField] public float max_reverse_modified;
         [SerializeField] public float wheel_steer_float;
         [SerializeField] public float max_steer_modified;
         public float accel_magnitude_float = 0;
         public float steer_magnitude_float = 0;
         public float brake_magnitude_float = 0;
+        public float trueBrake_magnitude_float = 0;
+        public float reverse_magnitude_float = 0;
         public float drift_correction_float = 0;
         public float nitros_meter_float = 0;
         public float nitros_speed_float = 0;
@@ -82,6 +86,8 @@ namespace ModuloKart.CustomVehiclePhysics
         [Range(0, 50)] public float max_steer_float = 15f;
         [Range(0, 500)] public float max_accel_float = 250f;
         [Range(0, 500)] public float max_brake_float = 100f;
+        [Range(0, 500)] public float max_trueBrake_float = 20f;
+        [Range(-200, 0)] public float max_reverse_float = -100f;
         [Range(0, 1)] public float min_drift_correction_float = 0.05f;
         [Range(0, 1)] public float max_drift_correction_float = 1f;
         [Tooltip("Speed at which Model Rotation snaps away from the Heading Rotation")]
@@ -111,6 +117,10 @@ namespace ModuloKart.CustomVehiclePhysics
         [Range(0, 100)] [SerializeField] public float DRAG = 25f;
         [Tooltip("Higher DRAG Values are more responsive")]
         [Range(0, 100)] [SerializeField] public float ROTATIONAL_DRAG = 25f;
+        [Tooltip("Higher BRAKE Values are more responsive")]
+        [Range(0, 100)] [SerializeField] public float BRAKE = 25f;
+        [Tooltip("Higher REVERSE Values are more responsive")]
+        [Range(0, 100)] [SerializeField] public float REVERSE = 25f;
         [Tooltip("Higher GRAVITY Values are more responsive")]
         [Range(1, 2000)] [SerializeField] public float GRAVITY = 1000f;
         [Tooltip("Higher STEER Values are more responsive")]
@@ -130,8 +140,11 @@ namespace ModuloKart.CustomVehiclePhysics
         public bool isControllerInitialized;
         public string input_steering = "LeftJoyStickX_P";
         public string input_accelerate = "RightTrigger_P";
+        public string input_reverse = "LeftJoyStickY_P";
         public string input_drift = "B_P";
         public string input_nitros = "A_P";
+        public string input_brake = "X_P";
+
         #endregion
 
         private void Start()
@@ -229,7 +242,8 @@ namespace ModuloKart.CustomVehiclePhysics
             //Get the Inputs first before any Movement is made
             VehicleAccelInput();
             VehicleSteerInput();
-
+            VehicleBrakeInput();
+            VehicleReverseInput();
             //Steering
             VehicleSteerRotation();
             //Wheel Rotation
@@ -591,10 +605,60 @@ namespace ModuloKart.CustomVehiclePhysics
                 }
             }
         }
-
+        private void VehicleBrakeInput()
+        {
+            if(Input.GetKey(KeyCode.S)||Input.GetButton(input_brake)/* && speed == 0*/ )
+            {
+                if (trueBrake_magnitude_float < max_trueBrake_modified)
+                {
+                    trueBrake_magnitude_float += (BRAKE + DRAG) * Time.fixedDeltaTime;
+                    if (trueBrake_magnitude_float > max_trueBrake_modified)
+                    {
+                        trueBrake_magnitude_float = max_trueBrake_modified;
+                    }
+                }
+                else
+                {
+                    trueBrake_magnitude_float -= (BRAKE + DRAG) * Time.fixedDeltaTime;
+                    if (trueBrake_magnitude_float < max_trueBrake_modified)
+                    {
+                        trueBrake_magnitude_float = max_trueBrake_modified;
+                    }
+                }
+            }
+            else
+            {
+                    trueBrake_magnitude_float = trueBrake_magnitude_float > 0 ? trueBrake_magnitude_float += DRAG * Time.fixedDeltaTime : 0;
+            }
+        }
+        private void VehicleReverseInput()
+        {
+            if ((Input.GetKey(KeyCode.S) &&Input.GetKey(KeyCode.K)) || (Input.GetButton(input_brake)&& Input.GetAxis(input_reverse)<0))
+            {
+                if (reverse_magnitude_float < max_reverse_modified)
+                {
+                    reverse_magnitude_float += REVERSE * Time.fixedDeltaTime;
+                    if (reverse_magnitude_float > max_reverse_modified)
+                    {
+                        reverse_magnitude_float = max_reverse_modified;
+                    }
+                }
+                else
+                {
+                    reverse_magnitude_float -= REVERSE * Time.fixedDeltaTime;
+                    if (reverse_magnitude_float < max_reverse_modified)
+                    {
+                        reverse_magnitude_float = max_reverse_modified;
+                    }
+                }
+            }
+            else
+            {
+                reverse_magnitude_float = reverse_magnitude_float > 0 ? reverse_magnitude_float -= DRAG * Time.fixedDeltaTime : 0;
+            }
+        }
         private void VehicleSteerInput()
         {
-            if (!is_drift)
                 max_steer_modified = max_steer_float;
 
             if (Input.GetKey(KeyCode.A) || Input.GetAxis(input_steering) < 0)
