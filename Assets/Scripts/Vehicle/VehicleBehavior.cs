@@ -611,7 +611,7 @@ namespace ModuloKart.CustomVehiclePhysics
             {
                 if (trueBrake_magnitude_float < max_trueBrake_modified)
                 {
-                    trueBrake_magnitude_float += (BRAKE + DRAG) * Time.fixedDeltaTime;
+                    trueBrake_magnitude_float += (DRAG - BRAKE) * Time.fixedDeltaTime;
                     if (trueBrake_magnitude_float > max_trueBrake_modified)
                     {
                         trueBrake_magnitude_float = max_trueBrake_modified;
